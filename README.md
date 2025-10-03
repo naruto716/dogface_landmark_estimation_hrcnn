@@ -21,15 +21,17 @@ Clean PyTorch implementation for training dog facial landmark detection on the D
 
 ### 1. Install Dependencies
 
+**Requirements:** Python 3.11 or 3.12
+
 #### Option A: Local Development
 
 ```bash
 # Initialize project with uv
-uv init --python 3.11
+uv init --python 3.11  # or 3.12
 uv sync
 
 # Add required packages
-uv add torch==2.1.0 torchvision==0.16.0 "numpy<2.0"
+uv add "torch>=2.1.0,<2.3.0" "torchvision>=0.16.0,<0.18.0" "numpy<2.0"
 uv add pillow opencv-python-headless tqdm timm kagglehub scikit-image
 ```
 
@@ -40,18 +42,17 @@ uv add pillow opencv-python-headless tqdm timm kagglehub scikit-image
 git clone https://github.com/naruto716/dogface_landmark_estimation_hrcnn.git
 cd dogface_landmark_estimation_hrcnn
 
-# Install from requirements.txt (includes proper version constraints)
-uv venv
-source .venv/bin/activate  # or `uv sync` if using uv
+# Install from requirements.txt (flexible version constraints for Python 3.11/3.12)
 uv pip install -r requirements.txt
 
-# Or with standard pip
+# Or with standard pip (no uv needed)
 pip install -r requirements.txt
 ```
 
 **Important for SageMaker/Headless Servers:**
-- Use `opencv-python-headless` (no GUI dependencies)
-- Use `numpy<2.0` (PyTorch 2.1 requires NumPy 1.x)
+- Use `opencv-python-headless` (no GUI dependencies)  
+- Use `numpy<2.0` (compatible with PyTorch 2.x)
+- Works with Python 3.11 or 3.12
 
 ### 2. Download Dataset
 
@@ -168,22 +169,30 @@ Your trained checkpoints will be saved to `work_dirs/` (which is gitignored).
 
 ### SageMaker / Cloud Issues
 
+**Error: `No solution found when resolving dependencies` (Python 3.12)**
+```bash
+# SageMaker often uses Python 3.12, which needs PyTorch 2.2+
+# The flexible requirements.txt handles this automatically
+git pull  # Get latest requirements.txt
+pip install -r requirements.txt
+```
+
 **Error: `ImportError: libGL.so.1: cannot open shared object file`**
 ```bash
 # Solution: Use opencv-python-headless instead
-uv pip uninstall opencv-python
-uv pip install opencv-python-headless
+pip uninstall opencv-python
+pip install opencv-python-headless
 ```
 
 **Error: `NumPy 1.x cannot be run in NumPy 2.x`**
 ```bash
-# Solution: Downgrade numpy
-uv pip install "numpy<2.0"
+# Solution: Use numpy<2.0 (already in requirements.txt)
+pip install "numpy>=1.24.0,<2.0"
 ```
 
-**Quick fix for both issues:**
+**One-liner fix for all common issues:**
 ```bash
-uv pip install -r requirements.txt --force-reinstall
+git pull && pip install -r requirements.txt --force-reinstall --no-cache-dir
 ```
 
 ### Memory Issues

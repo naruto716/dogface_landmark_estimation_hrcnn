@@ -18,9 +18,11 @@ env_cfg = dict(
     dist_cfg=dict(backend='nccl'),
 )
 
-# ===== EDIT THESE PATHS =====
-DOGFLW_ROOT = '/Users/michael/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW'  # has train/ and test/
-ANN_ROOT    = '/Users/michael/Projects/760face/data/dogflw/annotations'  # where train.json / val.json live
+# ===== CONFIGURE THESE PATHS =====
+# Override with: python tools/train.py CONFIG --cfg-options data_root=PATH ann_root=PATH
+import os
+DOGFLW_ROOT = os.getenv('DOGFLW_ROOT', os.path.expanduser('~/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW'))
+ANN_ROOT    = os.getenv('ANN_ROOT', 'data/dogflw/annotations')
 
 num_keypoints = 46
 input_size    = (256, 256)

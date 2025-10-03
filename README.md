@@ -19,7 +19,20 @@ Clean PyTorch implementation for training dog facial landmark detection on the D
 
 ## Setup
 
-### 1. Install Dependencies
+### MMPose Setup (Recommended for SageMaker)
+
+If you have a GPU instance, use MMPose for best results:
+
+```bash
+# On SageMaker with GPU
+git clone https://github.com/naruto716/dogface_landmark_estimation_hrcnn.git
+cd dogface_landmark_estimation_hrcnn
+
+# Run automated setup (5-10 mins on GPU instance)
+bash setup_mmpose_sagemaker.sh
+```
+
+### Lightweight PyTorch Setup (For Local Development)
 
 **Requirements:** Python 3.11 or 3.12
 

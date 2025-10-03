@@ -101,13 +101,46 @@ def main():
             
             if len(pose_results) > 0:
                 # Get keypoints from first detection
-                keypoints = pose_results[0].pred_instances.keypoints[0]  # [46, 2]
-                scores = pose_results[0].pred_instances.keypoint_scores[0]  # [46]
+                pred_instances = pose_results[0].pred_instances
+                
+                # Debug: print what we actually have
+                print(f"\nDEBUG for {Path(img_path).name}:")
+                print(f"  pred_instances type: {type(pred_instances)}")
+                print(f"  Available attributes: {dir(pred_instances)}")
+                
+                keypoints = pred_instances.keypoints
+                scores = pred_instances.keypoint_scores
+                
+                print(f"  keypoints type: {type(keypoints)}, shape: {keypoints.shape if hasattr(keypoints, 'shape') else 'N/A'}")
+                print(f"  scores type: {type(scores)}, shape: {scores.shape if hasattr(scores, 'shape') else 'N/A'}")
+                
+                # Convert to numpy if tensors
+                if hasattr(keypoints, 'cpu'):
+                    keypoints = keypoints.cpu().numpy()
+                if hasattr(scores, 'cpu'):
+                    scores = scores.cpu().numpy()
+                
+                print(f"  After conversion - keypoints shape: {keypoints.shape}, scores shape: {scores.shape}")
+                
+                # Handle shapes properly
+                if keypoints.ndim == 3:
+                    keypoints = keypoints[0]  # Remove batch dim
+                if scores.ndim == 2:
+                    scores = scores[0]  # Remove batch dim
+                
+                print(f"  Final shapes - keypoints: {keypoints.shape}, scores: {scores.shape}")
                 
                 # Combine into [46, 3] format
                 keypoints_with_conf = np.concatenate([
                     keypoints, scores.reshape(-1, 1)
                 ], axis=1)
+                
+                print(f"  Combined shape: {keypoints_with_conf.shape}")
+                
+                # Only process first image to see the debug output
+                if len(results) == 0:
+                    import sys
+                    sys.exit(0)
                 
                 # Save visualization
                 img_name = Path(img_path).stem

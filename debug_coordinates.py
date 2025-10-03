@@ -1,14 +1,25 @@
 """Debug script to check coordinate consistency."""
+import sys
+import os
 import torch
 import numpy as np
 import cv2
+import matplotlib
+matplotlib.use('Agg')  # Non-interactive backend for servers
 import matplotlib.pyplot as plt
 from dataset import DogFLWDataset
 
+# Get paths from command line or use defaults
+data_root = sys.argv[1] if len(sys.argv) > 1 else os.path.expanduser('~/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW')
+ann_root = sys.argv[2] if len(sys.argv) > 2 else 'data/dogflw/annotations'
+
+print(f"Using data_root: {data_root}")
+print(f"Using ann_root: {ann_root}")
+
 # Load one sample
 dataset = DogFLWDataset(
-    ann_file='data/dogflw/annotations/train.json',
-    img_dir='/Users/michael/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW/train/images'
+    ann_file=os.path.join(ann_root, 'train.json'),
+    img_dir=os.path.join(data_root, 'train/images')
 )
 
 sample = dataset[0]

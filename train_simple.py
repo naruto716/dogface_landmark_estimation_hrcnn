@@ -1,5 +1,6 @@
 """Simple PyTorch trainer for DogFLW."""
 import argparse
+import math
 import os
 from pathlib import Path
 
@@ -109,13 +110,20 @@ def calculate_nme(pred_heatmaps, keypoints, normalize='box'):
         norm_factor = 1.0
     
     nme = (valid_distances.sum() / num_valid) / norm_factor
-    return nme.item()
+    nme_value = nme.item()
+    
+    # Return 0 if NaN (shouldn't happen but safety check)
+    if math.isnan(nme_value) or math.isinf(nme_value):
+        return 0.0
+    
+    return nme_value
 
 
 def train_epoch(model, dataloader, criterion, optimizer, device, epoch):
     model.train()
     total_loss = 0
     total_nme = 0
+    num_batches = 0
     
     pbar = tqdm(dataloader, desc=f'Epoch {epoch}')
     for batch in pbar:
@@ -138,11 +146,12 @@ def train_epoch(model, dataloader, criterion, optimizer, device, epoch):
         
         total_loss += loss.item()
         total_nme += nme
+        num_batches += 1
         
         pbar.set_postfix({'loss': f'{loss.item():.4f}', 'nme': f'{nme:.4f}'})
     
-    avg_loss = total_loss / len(dataloader)
-    avg_nme = total_nme / len(dataloader)
+    avg_loss = total_loss / max(num_batches, 1)
+    avg_nme = total_nme / max(num_batches, 1)
     
     return avg_loss, avg_nme
 
@@ -152,6 +161,7 @@ def validate(model, dataloader, criterion, device):
     model.eval()
     total_loss = 0
     total_nme = 0
+    num_batches = 0
     
     pbar = tqdm(dataloader, desc='Validation')
     for batch in pbar:
@@ -168,11 +178,12 @@ def validate(model, dataloader, criterion, device):
         
         total_loss += loss.item()
         total_nme += nme
+        num_batches += 1
         
         pbar.set_postfix({'loss': f'{loss.item():.4f}', 'nme': f'{nme:.4f}'})
     
-    avg_loss = total_loss / len(dataloader)
-    avg_nme = total_nme / len(dataloader)
+    avg_loss = total_loss / max(num_batches, 1)
+    avg_nme = total_nme / max(num_batches, 1)
     
     return avg_loss, avg_nme
 

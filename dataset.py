@@ -77,7 +77,19 @@ class DogFLWDataset(Dataset):
         x2 = min(image.shape[1], int(center[0] + scale / 2))
         y2 = min(image.shape[0], int(center[1] + scale / 2))
         
-        cropped = image[y1:y2, x1:x2]
+        # Ensure valid crop
+        if x2 <= x1 or y2 <= y1:
+            # Invalid bbox, use full image
+            cropped = image
+            x1, y1 = 0, 0
+        else:
+            cropped = image[y1:y2, x1:x2]
+        
+        # Skip if cropped image is empty
+        if cropped.shape[0] == 0 or cropped.shape[1] == 0:
+            # Fallback to full image
+            cropped = image
+            x1, y1 = 0, 0
         
         # Adjust keypoints to cropped coordinates
         keypoints[:, 0] -= x1

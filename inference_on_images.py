@@ -158,7 +158,17 @@ def main():
                 })
             
         except Exception as e:
-            print(f"Error processing {img_path}: {e}")
+            print(f"\n{'='*60}")
+            print(f"Error processing {img_path}")
+            print(f"{'='*60}")
+            import traceback
+            traceback.print_exc()
+            print(f"{'='*60}\n")
+            
+            # Exit after first error to debug
+            if len(results) == 0:
+                import sys
+                sys.exit(1)
             continue
     
     # Save all predictions to JSON

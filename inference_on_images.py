@@ -93,11 +93,11 @@ def main():
             bbox, img = detect_dog_bbox(img_path)
             h, w = img.shape[:2]
             
-            # Create bbox in COCO format [x, y, w, h]
-            bbox_coco = np.array([[0, 0, w, h, 1.0]])  # [x, y, w, h, score]
+            # Create bbox in xyxy format [x1, y1, x2, y2] as expected by MMPose
+            bbox_xyxy = np.array([[0, 0, w, h]])  # [x1, y1, x2, y2]
             
             # Run inference
-            pose_results = inference_topdown(model, img_path, bboxes=bbox_coco)
+            pose_results = inference_topdown(model, img_path, bboxes=bbox_xyxy)
             
             if len(pose_results) > 0:
                 # Get keypoints from first detection

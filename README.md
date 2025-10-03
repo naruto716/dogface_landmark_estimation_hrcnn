@@ -77,16 +77,18 @@ uv run python tools/convert_dogflw_to_coco.py \
 ### Quick Start
 
 ```bash
-uv run python train_simple.py \
+# After downloading and converting the dataset, train with:
+python train_simple.py \
+  --data-root ~/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW \
+  --ann-root data/dogflw/annotations \
   --epochs 210 \
   --batch-size 16 \
-  --lr 1e-3 \
   --work-dir work_dirs/dogflw_hrnet
 ```
 
 ### Training Arguments
 
-- `--data-root`: Path to DogFLW dataset (default: auto-detected from kagglehub)
+- `--data-root`: **[REQUIRED]** Path to DogFLW dataset root (contains train/ and test/ folders)
 - `--ann-root`: Path to COCO annotations (default: `data/dogflw/annotations`)
 - `--epochs`: Number of training epochs (default: 210)
 - `--batch-size`: Batch size (default: 16)

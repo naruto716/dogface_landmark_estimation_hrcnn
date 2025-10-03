@@ -179,10 +179,10 @@ def validate(model, dataloader, criterion, device):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data-root', type=str, 
-                       default='/Users/michael/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW')
-    parser.add_argument('--ann-root', type=str,
-                       default='/Users/michael/Projects/760face/data/dogflw/annotations')
+    parser.add_argument('--data-root', type=str, required=True,
+                       help='Path to DogFLW dataset root (contains train/ and test/ folders)')
+    parser.add_argument('--ann-root', type=str, default='data/dogflw/annotations',
+                       help='Path to COCO annotations directory')
     parser.add_argument('--work-dir', type=str, default='work_dirs/simple_hrnet')
     parser.add_argument('--epochs', type=int, default=210)
     parser.add_argument('--batch-size', type=int, default=16)

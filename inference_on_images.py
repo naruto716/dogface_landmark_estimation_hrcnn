@@ -102,17 +102,8 @@ def main():
             if len(pose_results) > 0:
                 # Get keypoints from first detection
                 pred_instances = pose_results[0].pred_instances
-                
-                # Debug: print what we actually have
-                print(f"\nDEBUG for {Path(img_path).name}:")
-                print(f"  pred_instances type: {type(pred_instances)}")
-                print(f"  Available attributes: {dir(pred_instances)}")
-                
                 keypoints = pred_instances.keypoints
                 scores = pred_instances.keypoint_scores
-                
-                print(f"  keypoints type: {type(keypoints)}, shape: {keypoints.shape if hasattr(keypoints, 'shape') else 'N/A'}")
-                print(f"  scores type: {type(scores)}, shape: {scores.shape if hasattr(scores, 'shape') else 'N/A'}")
                 
                 # Convert to numpy if tensors
                 if hasattr(keypoints, 'cpu'):
@@ -120,27 +111,16 @@ def main():
                 if hasattr(scores, 'cpu'):
                     scores = scores.cpu().numpy()
                 
-                print(f"  After conversion - keypoints shape: {keypoints.shape}, scores shape: {scores.shape}")
-                
-                # Handle shapes properly
+                # Handle shapes properly (remove batch dimension if present)
                 if keypoints.ndim == 3:
-                    keypoints = keypoints[0]  # Remove batch dim
+                    keypoints = keypoints[0]  # [46, 2]
                 if scores.ndim == 2:
-                    scores = scores[0]  # Remove batch dim
-                
-                print(f"  Final shapes - keypoints: {keypoints.shape}, scores: {scores.shape}")
+                    scores = scores[0]  # [46]
                 
                 # Combine into [46, 3] format
                 keypoints_with_conf = np.concatenate([
                     keypoints, scores.reshape(-1, 1)
                 ], axis=1)
-                
-                print(f"  Combined shape: {keypoints_with_conf.shape}")
-                
-                # Only process first image to see the debug output
-                if len(results) == 0:
-                    import sys
-                    sys.exit(0)
                 
                 # Save visualization
                 img_name = Path(img_path).stem
@@ -158,17 +138,7 @@ def main():
                 })
             
         except Exception as e:
-            print(f"\n{'='*60}")
-            print(f"Error processing {img_path}")
-            print(f"{'='*60}")
-            import traceback
-            traceback.print_exc()
-            print(f"{'='*60}\n")
-            
-            # Exit after first error to debug
-            if len(results) == 0:
-                import sys
-                sys.exit(1)
+            print(f"Error processing {img_path}: {e}")
             continue
     
     # Save all predictions to JSON

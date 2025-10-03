@@ -1,0 +1,19 @@
+[project]
+name = "760face"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "albumentations>=2.0.8",
+    "kagglehub>=0.3.13",
+    "openmim>=0.3.9",
+    "pillow>=11.3.0",
+    "platformdirs>=4.4.0",
+    "scikit-image>=0.25.2",
+    "setuptools>=80.9.0",
+    "timm>=1.0.20",
+    "torch>=2.8.0",
+    "torchvision>=0.23.0",
+    "tqdm>=4.67.1",
+]

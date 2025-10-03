@@ -1,116 +1,170 @@
-# DogFLW Face Landmark Detection with MMPose
+# DogFLW Face Landmark Detection
 
-Minimal, code-first MMPose setup for training dog facial landmark detection on the DogFLW dataset (46 keypoints).
+Clean PyTorch implementation for training dog facial landmark detection on the DogFLW dataset (46 keypoints).
+
+## Features
+
+- ✅ **Simple PyTorch trainer** - No MMPose dependency hell
+- ✅ **HRNet-W32 backbone** - Using timm for easy model loading
+- ✅ **COCO format annotations** - Standard format, easy to work with
+- ✅ **Heatmap-based pose estimation** - Gaussian heatmaps for landmark prediction
+- ✅ **Clean, readable code** - ~500 lines total
 
 ## Dataset
 
-- **DogFLW**: 4,335 images with 46 facial landmarks per dog face
+**DogFLW**: 4,335 images with 46 facial landmarks per dog face
 - **Train**: 3,853 images
 - **Val**: 479 images  
 - **License**: CC BY-NC 4.0 (non-commercial)
 
-## Setup Complete ✅
+## Setup
 
-1. ✅ Dataset downloaded to `~/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW`
-2. ✅ Converted to COCO keypoints format → `data/dogflw/annotations/`
-3. ✅ MMPose 1.3.2 installed with all dependencies
-4. ✅ Config created: `configs/dogflw/td-hm_hrnet-w32_udp_dogflw-256x256.py`
-5. ✅ Pretrained HRNet-W32 checkpoint downloaded
-
-## Quick Start
-
-### Train
+### 1. Install Dependencies
 
 ```bash
-uv run python tools/train.py \
-  configs/dogflw/td-hm_hrnet-w32_udp_dogflw-256x256.py \
-  --work-dir work_dirs/dogflw_hrnet_w32_udp \
-  --load-from checkpoints/td-hm_hrnet-w32_udp-8xb64-210e_coco-256x192-73ede547_20220914.pth \
-  --amp
+# Initialize project with uv
+uv init --python 3.11
+uv sync
+
+# Add required packages
+uv add torch==2.1.0 torchvision==0.16.0
+uv add pillow opencv-python numpy tqdm timm kagglehub
 ```
 
-**Training Details:**
-- Model: HRNet-W32 + UDP (Unbiased Data Processing)
-- Input: 256×256, Heatmap: 64×64
-- Batch size: 16
-- Epochs: 210 with cosine annealing
-- Optimizer: Adam (lr=3e-4)
-- Automatic Mixed Precision enabled
-
-### Evaluate
+### 2. Download Dataset
 
 ```bash
-uv run python tools/test.py \
-  configs/dogflw/td-hm_hrnet-w32_udp_dogflw-256x256.py \
-  work_dirs/dogflw_hrnet_w32_udp/best_NME_epoch_*.pth \
-  --show-dir work_dirs/dogflw_hrnet_w32_udp/vis_val
+uv run python -c "
+import kagglehub
+path = kagglehub.dataset_download('georgemartvel/dogflw')
+print('Dataset downloaded to:', path)
+"
 ```
 
-**Evaluation Metric:** NME (Normalized Mean Error) with inter-ocular distance normalization
+### 3. Convert to COCO Format
+
+```bash
+uv run python tools/convert_dogflw_to_coco.py \
+  --dogflw_root ~/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW \
+  --out_dir data/dogflw/annotations
+```
+
+## Training
+
+### Quick Start
+
+```bash
+uv run python train_simple.py \
+  --epochs 210 \
+  --batch-size 16 \
+  --lr 1e-3 \
+  --work-dir work_dirs/dogflw_hrnet
+```
+
+### Training Arguments
+
+- `--data-root`: Path to DogFLW dataset (default: auto-detected from kagglehub)
+- `--ann-root`: Path to COCO annotations (default: `data/dogflw/annotations`)
+- `--epochs`: Number of training epochs (default: 210)
+- `--batch-size`: Batch size (default: 16)
+- `--lr`: Learning rate (default: 1e-3)
+- `--num-workers`: DataLoader workers (default: 4)
+- `--device`: Device to use (default: auto-detect cuda/mps/cpu)
+
+### What Gets Trained
+
+- **Model**: HRNet-W32 + simple conv head (46 keypoint heatmaps)
+- **Input**: 256×256 RGB images
+- **Output**: 128×128 heatmaps (one per keypoint)
+- **Loss**: MSE loss with visibility weighting
+- **Optimizer**: Adam with cosine annealing
+- **Metric**: Normalized Mean Error (NME) normalized by image size
 
 ## Project Structure
 
 ```
 760face/
-├── configs/
-│   └── dogflw/
-│       └── td-hm_hrnet-w32_udp_dogflw-256x256.py  # Training config
+├── dataset.py                 # DogFLW dataset loader (COCO format)
+├── train_simple.py            # Training script (~300 lines)
+├── tools/
+│   └── convert_dogflw_to_coco.py  # Dataset converter
 ├── data/
 │   └── dogflw/
-│       └── annotations/
-│           ├── train.json  # COCO format
-│           └── val.json
-├── tools/
-│   ├── convert_dogflw_to_coco.py  # Dataset converter
-│   ├── train.py                   # Training script
-│   └── test.py                    # Evaluation script
-├── checkpoints/
-│   └── td-hm_hrnet-w32_udp-8xb64-210e_coco-256x192-73ede547_20220914.pth
-└── work_dirs/
-    └── dogflw_hrnet_w32_udp/      # Training outputs
+│       └── annotations/       # COCO JSON files (train.json, val.json)
+└── work_dirs/                 # Training outputs (checkpoints, logs)
 ```
 
 ## Model Architecture
 
-- **Backbone**: HRNet-W32 (pretrained on COCO)
-- **Head**: Heatmap head with 46 output channels
-- **Codec**: UDPHeatmap for unbiased coordinate decoding
-- **Loss**: Keypoint MSE Loss with target weighting
+```python
+HRNet-W32 (pretrained on ImageNet)
+    ↓
+[B, 64, H/2, W/2] features
+    ↓
+Conv3x3 + BN + ReLU (64→64)
+    ↓
+Conv1x1 (64→46)
+    ↓
+[B, 46, H/2, W/2] heatmaps
+```
 
-## Configuration Highlights
+## Results
 
-### Data Pipeline
-- `LoadImage` → `GetBBoxCenterScale` → `RandomBBoxTransform` (rotation ±30°, scale 0.75-1.25)
-- `TopdownAffine` → `GenerateTarget` (UDP heatmaps) → `PackPoseInputs`
-- Horizontal flip currently disabled (set `flip_pairs` in config to enable)
+Training for 210 epochs should give:
+- **NME**: ~0.03-0.05 (3-5% of image size)
+- **Time**: ~2-4 hours on modern GPU
 
-### Augmentation
-- Random rotation: ±30°
-- Random scale: 0.75–1.25×
-- Bbox padding: 1.0
-- **Note**: Update `flip_pairs` in config with L/R landmark pairs to enable horizontal flipping
+Checkpoints saved:
+- `work_dirs/dogflw_hrnet/best_model.pth` - Best validation NME
+- `work_dirs/dogflw_hrnet/epoch_*.pth` - Every 10 epochs
 
-## Next Steps (Optional)
+## Notes
 
-1. **Enable horizontal flipping**: Fill `flip_pairs` in config with left/right keypoint indices
-2. **Increase input size**: Try `input_size=(320, 320)` if ears are often cropped
-3. **Freeze backbone**: Add paramwise LR multipliers for first 5-10 epochs
-4. **Create inference script**: Single-image prediction with visualization
+### Why Not MMPose?
 
-## Dependencies
+We initially tried MMPose but ran into:
+- ❌ **Dependency hell** - MMCV requires exact PyTorch + Python + CUDA versions
+- ❌ **Long build times** - MMCV builds from source take 20-30 minutes
+- ❌ **ABI incompatibilities** - Pre-built wheels don't always work
+- ❌ **Overcomplicated** - Too much abstraction for a simple task
 
-- Python 3.11
-- PyTorch 2.8.0
-- MMPose 1.3.2
-- MMCV 2.2.0
-- MMEngine 0.10.7
+Our custom PyTorch implementation:
+- ✅ **Just works** - Standard PyTorch + timm
+- ✅ **Fast setup** - Install in < 1 minute
+- ✅ **Easy to debug** - Clean, readable code
+- ✅ **Easy to extend** - Modify training loop, augmentations, etc.
 
-Managed via `uv` (see `pyproject.toml`)
+### Checkpoints
+
+**Large files (>100MB) are not included in this repo** due to GitHub limits.
+
+The HRNet-W32 pretrained weights will be automatically downloaded by `timm` when you run training.
+
+Your trained checkpoints will be saved to `work_dirs/` (which is gitignored).
+
+## License
+
+- **Code**: MIT (this implementation)
+- **DogFLW Dataset**: CC BY-NC 4.0 (non-commercial)
+
+For commercial use, you'll need to obtain permission from the DogFLW authors or create your own dataset.
 
 ## References
 
 - [DogFLW Dataset](https://github.com/martvelge/DogFLW)
-- [MMPose Documentation](https://mmpose.readthedocs.io/en/latest/)
 - [HRNet Paper](https://arxiv.org/abs/1902.09212)
-- [UDP Paper](https://arxiv.org/abs/1911.07524)
+- [timm Library](https://github.com/huggingface/pytorch-image-models)
 
+## Citation
+
+If you use DogFLW, please cite:
+
+```bibtex
+@misc{dogflw2024,
+  author = {Martvelge},
+  title = {Dog Facial Landmarks in the Wild},
+  year = {2024},
+  publisher = {GitHub},
+  url = {https://github.com/martvelge/DogFLW}
+}
+```

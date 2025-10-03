@@ -18,7 +18,7 @@ class DogFLWDataset(Dataset):
         img_dir: str,
         input_size: Tuple[int, int] = (256, 256),
         heatmap_size: Tuple[int, int] = (128, 128),
-        sigma: float = 3.0,
+        sigma: float = 5.0,
         transform=None,
         mode: str = 'train'
     ):

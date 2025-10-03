@@ -124,6 +124,7 @@ def train_epoch(model, dataloader, criterion, optimizer, device, epoch):
     total_loss = 0
     total_nme = 0
     num_batches = 0
+    num_valid_nme = 0
     
     pbar = tqdm(dataloader, desc=f'Epoch {epoch}')
     for batch in pbar:
@@ -143,15 +144,17 @@ def train_epoch(model, dataloader, criterion, optimizer, device, epoch):
         # Calculate metrics
         with torch.no_grad():
             nme = calculate_nme(pred_heatmaps, keypoints)
+            if not (math.isnan(nme) or math.isinf(nme)):
+                total_nme += nme
+                num_valid_nme += 1
         
         total_loss += loss.item()
-        total_nme += nme
         num_batches += 1
         
         pbar.set_postfix({'loss': f'{loss.item():.4f}', 'nme': f'{nme:.4f}'})
     
     avg_loss = total_loss / max(num_batches, 1)
-    avg_nme = total_nme / max(num_batches, 1)
+    avg_nme = total_nme / max(num_valid_nme, 1) if num_valid_nme > 0 else 0.0
     
     return avg_loss, avg_nme
 
@@ -246,7 +249,18 @@ def main():
     # Loss and optimizer
     criterion = JointsMSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
+    
+    # Warmup + Cosine scheduler
+    def lr_lambda(epoch):
+        warmup_epochs = 10
+        if epoch < warmup_epochs:
+            return (epoch + 1) / warmup_epochs
+        else:
+            # Cosine decay after warmup
+            progress = (epoch - warmup_epochs) / (args.epochs - warmup_epochs)
+            return 0.5 * (1 + math.cos(math.pi * progress))
+    
+    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
     
     # Training loop
     best_nme = float('inf')

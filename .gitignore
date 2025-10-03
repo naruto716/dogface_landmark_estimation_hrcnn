@@ -8,3 +8,13 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Large model checkpoints and training outputs
+checkpoints/*.pth
+work_dirs/
+*.pth
+*.ckpt
+
+# Dataset cache
+.cache/
+data/

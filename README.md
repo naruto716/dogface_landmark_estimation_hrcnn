@@ -21,15 +21,37 @@ Clean PyTorch implementation for training dog facial landmark detection on the D
 
 ### 1. Install Dependencies
 
+#### Option A: Local Development
+
 ```bash
 # Initialize project with uv
 uv init --python 3.11
 uv sync
 
 # Add required packages
-uv add torch==2.1.0 torchvision==0.16.0
-uv add pillow opencv-python numpy tqdm timm kagglehub
+uv add torch==2.1.0 torchvision==0.16.0 "numpy<2.0"
+uv add pillow opencv-python-headless tqdm timm kagglehub scikit-image
 ```
+
+#### Option B: SageMaker / Cloud (Recommended)
+
+```bash
+# Clone the repo
+git clone https://github.com/naruto716/dogface_landmark_estimation_hrcnn.git
+cd dogface_landmark_estimation_hrcnn
+
+# Install from requirements.txt (includes proper version constraints)
+uv venv
+source .venv/bin/activate  # or `uv sync` if using uv
+uv pip install -r requirements.txt
+
+# Or with standard pip
+pip install -r requirements.txt
+```
+
+**Important for SageMaker/Headless Servers:**
+- Use `opencv-python-headless` (no GUI dependencies)
+- Use `numpy<2.0` (PyTorch 2.1 requires NumPy 1.x)
 
 ### 2. Download Dataset
 
@@ -141,6 +163,39 @@ Our custom PyTorch implementation:
 The HRNet-W32 pretrained weights will be automatically downloaded by `timm` when you run training.
 
 Your trained checkpoints will be saved to `work_dirs/` (which is gitignored).
+
+## Troubleshooting
+
+### SageMaker / Cloud Issues
+
+**Error: `ImportError: libGL.so.1: cannot open shared object file`**
+```bash
+# Solution: Use opencv-python-headless instead
+uv pip uninstall opencv-python
+uv pip install opencv-python-headless
+```
+
+**Error: `NumPy 1.x cannot be run in NumPy 2.x`**
+```bash
+# Solution: Downgrade numpy
+uv pip install "numpy<2.0"
+```
+
+**Quick fix for both issues:**
+```bash
+uv pip install -r requirements.txt --force-reinstall
+```
+
+### Memory Issues
+
+If you run out of memory:
+```bash
+# Reduce batch size
+uv run python train_simple.py --batch-size 8  # or even 4
+
+# Reduce num_workers
+uv run python train_simple.py --num-workers 0
+```
 
 ## License
 

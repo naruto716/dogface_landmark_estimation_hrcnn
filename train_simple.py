@@ -35,6 +35,13 @@ class HRNetPoseModel(nn.Module):
             nn.Conv2d(64, num_keypoints, kernel_size=1)
         )
         
+        # Initialize head with larger weights for stronger initial predictions
+        for m in self.head.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.normal_(m.weight, std=0.01)
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+        
     def forward(self, x):
         # Get features from HRNet
         features = self.backbone(x)[0]  # [B, 64, H/2, W/2]
@@ -248,7 +255,12 @@ def main():
     
     # Loss and optimizer
     criterion = JointsMSELoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+    
+    # Use higher LR for head (random init) vs backbone (pretrained)
+    optimizer = torch.optim.Adam([
+        {'params': model.backbone.parameters(), 'lr': args.lr},
+        {'params': model.head.parameters(), 'lr': args.lr * 10}  # 10x higher for head
+    ], lr=args.lr)
     
     # Warmup + Cosine scheduler
     def lr_lambda(epoch):

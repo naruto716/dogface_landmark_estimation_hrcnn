@@ -18,3 +18,8 @@ work_dirs/
 # Dataset cache
 .cache/
 data/
+dog_facial_regions
+cropped_regions_demo
+corrected_regions_output
+landmarks_only
+quick_test_output

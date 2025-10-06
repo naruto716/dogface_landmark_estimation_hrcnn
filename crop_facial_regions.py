@@ -159,8 +159,7 @@ class DogFacialRegionCropper:
             'mouth': (0, 165, 255),        # Orange
             'left_ear': (0, 255, 0),       # Green
             'right_ear': (0, 255, 127),    # Light green
-            'forehead': (128, 0, 128),     # Purple
-            'face_contour': (255, 0, 255)  # Magenta
+            'forehead': (128, 0, 128)      # Purple
         }
         
         # Draw bounding boxes for each region

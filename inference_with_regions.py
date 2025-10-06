@@ -301,38 +301,41 @@ def main():
 
 def create_summary_html(output_dir, results):
     """Create an HTML summary for easy browsing."""
-    html_content = """
+    num_results = len(results)
+    avg_confidence = np.mean([r['avg_confidence'] for r in results]) if results else 0
+    
+    html_content = f"""
 <!DOCTYPE html>
 <html>
 <head>
     <title>Dog Face Inference Results</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
-        h1 { color: #333; text-align: center; }
-        .summary { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { 
+        body {{ font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }}
+        h1 {{ color: #333; text-align: center; }}
+        .summary {{ background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }}
+        .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }}
+        .card {{ 
             background: white; 
             border: 1px solid #ddd; 
             border-radius: 8px; 
             padding: 15px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .card img { 
+        }}
+        .card img {{ 
             width: 100%; 
             height: auto; 
             border-radius: 4px; 
             margin-bottom: 10px;
-        }
-        .card h3 { margin: 10px 0; color: #333; }
-        .stats { font-size: 14px; color: #666; }
-        .links { margin-top: 10px; }
-        .links a { 
+        }}
+        .card h3 {{ margin: 10px 0; color: #333; }}
+        .stats {{ font-size: 14px; color: #666; }}
+        .links {{ margin-top: 10px; }}
+        .links a {{ 
             color: #0066cc; 
             text-decoration: none; 
             margin-right: 15px;
-        }
-        .links a:hover { text-decoration: underline; }
+        }}
+        .links a:hover {{ text-decoration: underline; }}
     </style>
 </head>
 <body>
@@ -340,13 +343,13 @@ def create_summary_html(output_dir, results):
     
     <div class="summary">
         <h2>Summary</h2>
-        <p>Total images processed: <strong>{}</strong></p>
-        <p>Average landmark confidence: <strong>{:.3f}</strong></p>
+        <p>Total images processed: <strong>{num_results}</strong></p>
+        <p>Average landmark confidence: <strong>{avg_confidence:.3f}</strong></p>
         <p>Facial regions extracted: left_eye, right_eye, nose, mouth, left_ear, right_ear, forehead</p>
     </div>
     
     <div class="grid">
-""".format(len(results), np.mean([r['avg_confidence'] for r in results]) if results else 0)
+"""
     
     for i, result in enumerate(results):
         folder_name = os.path.basename(result['output_folder'])

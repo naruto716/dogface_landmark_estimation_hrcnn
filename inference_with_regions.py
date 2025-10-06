@@ -17,11 +17,19 @@ from crop_facial_regions import DogFacialRegionCropper
 
 
 def get_random_images(root_dir, num_images=100):
-    """Get first N images from PetFace dog dataset."""
+    """Get first N images from dog dataset."""
     images = []
     root_path = Path(root_dir)
     
-    # Stop as soon as we have enough images
+    # First, try to get images directly from root_dir
+    for img_file in sorted(root_path.glob('*')):
+        if img_file.is_file() and img_file.suffix.lower() in ['.png', '.jpg', '.jpeg']:
+            images.append(str(img_file))
+            if len(images) >= num_images:
+                print(f"Collected {len(images)} images from {root_dir}")
+                return images
+    
+    # If no images found directly, look in subfolders
     for dog_folder in sorted(root_path.iterdir()):
         if not dog_folder.is_dir():
             continue
@@ -31,7 +39,7 @@ def get_random_images(root_dir, num_images=100):
                 images.append(str(img_file))
                 
                 if len(images) >= num_images:
-                    print(f"Collected {len(images)} images")
+                    print(f"Collected {len(images)} images from subfolders")
                     return images
     
     print(f"Collected {len(images)} images")

@@ -1,0 +1,15 @@
+# Core dependencies for dog face inference
+torch>=2.0.0
+torchvision>=0.15.0
+numpy<2.0
+opencv-python-headless>=4.8.0
+pillow>=10.0.0
+
+# MMPose dependencies
+mmengine>=0.8.0
+mmcv>=2.0.0,<2.2.0
+mmpose>=1.0.0
+mmdet>=3.0.0
+
+# Optional for visualization
+matplotlib>=3.7.0

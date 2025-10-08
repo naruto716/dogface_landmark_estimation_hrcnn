@@ -1,0 +1,85 @@
+{
+  "image_path": "/path/to/dog_image.jpg",
+  "image_width": 800,
+  "image_height": 600,
+  "landmarks": [
+    {
+      "id": 0,
+      "x": 245.3,
+      "y": 123.7,
+      "confidence": 0.89
+    },
+    {
+      "id": 1,
+      "x": 250.1,
+      "y": 125.2,
+      "confidence": 0.92
+    },
+    {
+      "id": 2,
+      "x": 255.8,
+      "y": 127.4,
+      "confidence": 0.87
+    }
+  ],
+  "region_bboxes": {
+    "left_eye": {
+      "x_min": 320,
+      "y_min": 180,
+      "x_max": 360,
+      "y_max": 210,
+      "width": 40,
+      "height": 30
+    },
+    "right_eye": {
+      "x_min": 440,
+      "y_min": 175,
+      "x_max": 475,
+      "y_max": 205,
+      "width": 35,
+      "height": 30
+    },
+    "nose": {
+      "x_min": 375,
+      "y_min": 280,
+      "x_max": 425,
+      "y_max": 320,
+      "width": 50,
+      "height": 40
+    },
+    "mouth": {
+      "x_min": 350,
+      "y_min": 350,
+      "x_max": 450,
+      "y_max": 420,
+      "width": 100,
+      "height": 70
+    },
+    "left_ear": {
+      "x_min": 200,
+      "y_min": 50,
+      "x_max": 280,
+      "y_max": 180,
+      "width": 80,
+      "height": 130
+    },
+    "right_ear": {
+      "x_min": 520,
+      "y_min": 45,
+      "x_max": 600,
+      "y_max": 170,
+      "width": 80,
+      "height": 125
+    },
+    "forehead": {
+      "x_min": 300,
+      "y_min": 100,
+      "x_max": 500,
+      "y_max": 200,
+      "width": 200,
+      "height": 100
+    }
+  },
+  "avg_confidence": 0.856,
+  "visible_landmarks": 46
+}

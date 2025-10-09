@@ -152,9 +152,11 @@ def main():
                 failed += 1
                 continue
             
-            # Save JSON
-            img_name = Path(img_path).stem
-            output_file = os.path.join(args.output_dir, f'{img_name}.json')
+            # Save JSON with dog ID to avoid overwriting
+            img_path_obj = Path(img_path)
+            dog_id = img_path_obj.parent.name  # Get parent folder name (dog ID)
+            img_name = img_path_obj.stem
+            output_file = os.path.join(args.output_dir, f'{dog_id}_{img_name}.json')
             
             with open(output_file, 'w') as f:
                 json.dump(result, f, indent=2)

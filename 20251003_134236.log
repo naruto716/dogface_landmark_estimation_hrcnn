@@ -1,0 +1,2020 @@
+2025/10/03 13:42:38 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.12.9 | packaged by conda-forge | (main, Feb 14 2025, 08:00:06) [GCC 13.3.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 381664970
+    GPU 0: NVIDIA L4
+    CUDA_HOME: /opt/conda
+    NVCC: Cuda compilation tools, release 12.6, V12.6.85
+    GCC: gcc (conda-forge gcc 13.4.0-4) 13.4.0
+    PyTorch: 2.2.2+cu121
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2022.2-Product Build 20220804 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.3.2 (Git Hash 2dc95a2ad0841e29db8b22fbccaf3e5da7992b01)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 12.1
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.9.2
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.1, CUDNN_VERSION=8.9.2, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.2.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=1, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+    TorchVision: 0.17.2+cu121
+    OpenCV: 4.12.0
+    MMEngine: 0.10.7
+
+Runtime environment:
+    cudnn_benchmark: False
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 381664970
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2025/10/03 13:42:41 - mmengine - INFO - Config:
+ANN_ROOT = 'data/dogflw/annotations'
+DOGFLW_ROOT = '/home/sagemaker-user/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW'
+backend_args = None
+codec = dict(
+    heatmap_size=(
+        64,
+        64,
+    ),
+    input_size=(
+        256,
+        256,
+    ),
+    sigma=2,
+    type='UDPHeatmap')
+default_hooks = dict(
+    checkpoint=dict(
+        interval=10, rule='less', save_best='NME', type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(enable=False, type='PoseVisualizationHook'))
+default_scope = 'mmpose'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+heatmap_size = (
+    64,
+    64,
+)
+input_size = (
+    256,
+    256,
+)
+launcher = 'none'
+load_from = 'work_dirs/mmpose_dogflw/best_NME_epoch_100.pth'
+log_level = 'INFO'
+log_processor = dict(
+    by_epoch=True, num_digits=6, type='LogProcessor', window_size=50)
+metainfo = dict(
+    dataset_name='dogflw',
+    joint_weights=[
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+    ],
+    keypoint_info=dict({
+        0:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=0, name='kp_0', swap='', type=''),
+        1:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=1, name='kp_1', swap='', type=''),
+        10:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=10, name='kp_10', swap='', type=''),
+        11:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=11, name='kp_11', swap='', type=''),
+        12:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=12, name='kp_12', swap='', type=''),
+        13:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=13, name='kp_13', swap='', type=''),
+        14:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=14, name='kp_14', swap='', type=''),
+        15:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=15, name='kp_15', swap='', type=''),
+        16:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=16, name='kp_16', swap='', type=''),
+        17:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=17, name='kp_17', swap='', type=''),
+        18:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=18, name='kp_18', swap='', type=''),
+        19:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=19, name='kp_19', swap='', type=''),
+        2:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=2, name='kp_2', swap='', type=''),
+        20:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=20, name='kp_20', swap='', type=''),
+        21:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=21, name='kp_21', swap='', type=''),
+        22:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=22, name='kp_22', swap='', type=''),
+        23:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=23, name='kp_23', swap='', type=''),
+        24:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=24, name='kp_24', swap='', type=''),
+        25:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=25, name='kp_25', swap='', type=''),
+        26:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=26, name='kp_26', swap='', type=''),
+        27:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=27, name='kp_27', swap='', type=''),
+        28:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=28, name='kp_28', swap='', type=''),
+        29:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=29, name='kp_29', swap='', type=''),
+        3:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=3, name='kp_3', swap='', type=''),
+        30:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=30, name='kp_30', swap='', type=''),
+        31:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=31, name='kp_31', swap='', type=''),
+        32:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=32, name='kp_32', swap='', type=''),
+        33:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=33, name='kp_33', swap='', type=''),
+        34:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=34, name='kp_34', swap='', type=''),
+        35:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=35, name='kp_35', swap='', type=''),
+        36:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=36, name='kp_36', swap='', type=''),
+        37:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=37, name='kp_37', swap='', type=''),
+        38:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=38, name='kp_38', swap='', type=''),
+        39:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=39, name='kp_39', swap='', type=''),
+        4:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=4, name='kp_4', swap='', type=''),
+        40:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=40, name='kp_40', swap='', type=''),
+        41:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=41, name='kp_41', swap='', type=''),
+        42:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=42, name='kp_42', swap='', type=''),
+        43:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=43, name='kp_43', swap='', type=''),
+        44:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=44, name='kp_44', swap='', type=''),
+        45:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=45, name='kp_45', swap='', type=''),
+        5:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=5, name='kp_5', swap='', type=''),
+        6:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=6, name='kp_6', swap='', type=''),
+        7:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=7, name='kp_7', swap='', type=''),
+        8:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=8, name='kp_8', swap='', type=''),
+        9:
+        dict(color=[
+            255,
+            0,
+            0,
+        ], id=9, name='kp_9', swap='', type='')
+    }),
+    num_keypoints=46,
+    sigmas=[
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+        0.025,
+    ],
+    skeleton_info=dict())
+model = dict(
+    backbone=dict(
+        extra=dict(
+            stage1=dict(
+                block='BOTTLENECK',
+                num_blocks=(4, ),
+                num_branches=1,
+                num_channels=(64, ),
+                num_modules=1),
+            stage2=dict(
+                block='BASIC',
+                num_blocks=(
+                    4,
+                    4,
+                ),
+                num_branches=2,
+                num_channels=(
+                    32,
+                    64,
+                ),
+                num_modules=1),
+            stage3=dict(
+                block='BASIC',
+                num_blocks=(
+                    4,
+                    4,
+                    4,
+                ),
+                num_branches=3,
+                num_channels=(
+                    32,
+                    64,
+                    128,
+                ),
+                num_modules=4),
+            stage4=dict(
+                block='BASIC',
+                num_blocks=(
+                    4,
+                    4,
+                    4,
+                    4,
+                ),
+                num_branches=4,
+                num_channels=(
+                    32,
+                    64,
+                    128,
+                    256,
+                ),
+                num_modules=3)),
+        in_channels=3,
+        init_cfg=None,
+        type='HRNet'),
+    data_preprocessor=dict(type='PoseDataPreprocessor'),
+    head=dict(
+        decoder=dict(
+            heatmap_size=(
+                64,
+                64,
+            ),
+            input_size=(
+                256,
+                256,
+            ),
+            sigma=2,
+            type='UDPHeatmap'),
+        deconv_out_channels=None,
+        in_channels=32,
+        loss=dict(type='KeypointMSELoss', use_target_weight=True),
+        out_channels=46,
+        type='HeatmapHead'),
+    test_cfg=dict(flip_test=False, shift_heatmap=False),
+    type='TopdownPoseEstimator')
+num_keypoints = 46
+optim_wrapper = dict(optimizer=dict(lr=0.0003, type='Adam'))
+param_scheduler = [
+    dict(T_max=210, by_epoch=True, type='CosineAnnealingLR'),
+]
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=16,
+    dataset=dict(
+        ann_file='data/dogflw/annotations/val.json',
+        data_mode='topdown',
+        data_prefix=dict(img='images/'),
+        data_root=
+        '/home/sagemaker-user/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW/test',
+        metainfo=dict(
+            dataset_name='dogflw',
+            joint_weights=[
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+            ],
+            keypoint_info=dict({
+                0:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=0, name='kp_0', swap='', type=''),
+                1:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=1, name='kp_1', swap='', type=''),
+                10:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=10, name='kp_10', swap='', type=''),
+                11:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=11, name='kp_11', swap='', type=''),
+                12:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=12, name='kp_12', swap='', type=''),
+                13:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=13, name='kp_13', swap='', type=''),
+                14:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=14, name='kp_14', swap='', type=''),
+                15:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=15, name='kp_15', swap='', type=''),
+                16:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=16, name='kp_16', swap='', type=''),
+                17:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=17, name='kp_17', swap='', type=''),
+                18:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=18, name='kp_18', swap='', type=''),
+                19:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=19, name='kp_19', swap='', type=''),
+                2:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=2, name='kp_2', swap='', type=''),
+                20:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=20, name='kp_20', swap='', type=''),
+                21:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=21, name='kp_21', swap='', type=''),
+                22:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=22, name='kp_22', swap='', type=''),
+                23:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=23, name='kp_23', swap='', type=''),
+                24:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=24, name='kp_24', swap='', type=''),
+                25:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=25, name='kp_25', swap='', type=''),
+                26:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=26, name='kp_26', swap='', type=''),
+                27:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=27, name='kp_27', swap='', type=''),
+                28:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=28, name='kp_28', swap='', type=''),
+                29:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=29, name='kp_29', swap='', type=''),
+                3:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=3, name='kp_3', swap='', type=''),
+                30:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=30, name='kp_30', swap='', type=''),
+                31:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=31, name='kp_31', swap='', type=''),
+                32:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=32, name='kp_32', swap='', type=''),
+                33:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=33, name='kp_33', swap='', type=''),
+                34:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=34, name='kp_34', swap='', type=''),
+                35:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=35, name='kp_35', swap='', type=''),
+                36:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=36, name='kp_36', swap='', type=''),
+                37:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=37, name='kp_37', swap='', type=''),
+                38:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=38, name='kp_38', swap='', type=''),
+                39:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=39, name='kp_39', swap='', type=''),
+                4:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=4, name='kp_4', swap='', type=''),
+                40:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=40, name='kp_40', swap='', type=''),
+                41:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=41, name='kp_41', swap='', type=''),
+                42:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=42, name='kp_42', swap='', type=''),
+                43:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=43, name='kp_43', swap='', type=''),
+                44:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=44, name='kp_44', swap='', type=''),
+                45:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=45, name='kp_45', swap='', type=''),
+                5:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=5, name='kp_5', swap='', type=''),
+                6:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=6, name='kp_6', swap='', type=''),
+                7:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=7, name='kp_7', swap='', type=''),
+                8:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=8, name='kp_8', swap='', type=''),
+                9:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=9, name='kp_9', swap='', type='')
+            }),
+            num_keypoints=46,
+            sigmas=[
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+            ],
+            skeleton_info=dict()),
+        pipeline=[
+            dict(backend_args=None, type='LoadImage'),
+            dict(padding=1.0, type='GetBBoxCenterScale'),
+            dict(input_size=(
+                256,
+                256,
+            ), type='TopdownAffine'),
+            dict(type='PackPoseInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    num_workers=4,
+    persistent_workers=False,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    keypoint_indices=[
+        0,
+        1,
+    ], norm_mode='keypoint_distance', type='NME')
+train_cfg = dict(max_epochs=210, type='EpochBasedTrainLoop', val_interval=5)
+train_dataloader = dict(
+    batch_size=16,
+    dataset=dict(
+        ann_file='data/dogflw/annotations/train.json',
+        data_mode='topdown',
+        data_prefix=dict(img='images/'),
+        data_root=
+        '/home/sagemaker-user/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW/train',
+        metainfo=dict(
+            dataset_name='dogflw',
+            joint_weights=[
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+            ],
+            keypoint_info=dict({
+                0:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=0, name='kp_0', swap='', type=''),
+                1:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=1, name='kp_1', swap='', type=''),
+                10:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=10, name='kp_10', swap='', type=''),
+                11:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=11, name='kp_11', swap='', type=''),
+                12:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=12, name='kp_12', swap='', type=''),
+                13:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=13, name='kp_13', swap='', type=''),
+                14:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=14, name='kp_14', swap='', type=''),
+                15:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=15, name='kp_15', swap='', type=''),
+                16:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=16, name='kp_16', swap='', type=''),
+                17:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=17, name='kp_17', swap='', type=''),
+                18:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=18, name='kp_18', swap='', type=''),
+                19:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=19, name='kp_19', swap='', type=''),
+                2:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=2, name='kp_2', swap='', type=''),
+                20:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=20, name='kp_20', swap='', type=''),
+                21:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=21, name='kp_21', swap='', type=''),
+                22:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=22, name='kp_22', swap='', type=''),
+                23:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=23, name='kp_23', swap='', type=''),
+                24:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=24, name='kp_24', swap='', type=''),
+                25:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=25, name='kp_25', swap='', type=''),
+                26:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=26, name='kp_26', swap='', type=''),
+                27:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=27, name='kp_27', swap='', type=''),
+                28:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=28, name='kp_28', swap='', type=''),
+                29:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=29, name='kp_29', swap='', type=''),
+                3:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=3, name='kp_3', swap='', type=''),
+                30:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=30, name='kp_30', swap='', type=''),
+                31:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=31, name='kp_31', swap='', type=''),
+                32:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=32, name='kp_32', swap='', type=''),
+                33:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=33, name='kp_33', swap='', type=''),
+                34:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=34, name='kp_34', swap='', type=''),
+                35:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=35, name='kp_35', swap='', type=''),
+                36:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=36, name='kp_36', swap='', type=''),
+                37:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=37, name='kp_37', swap='', type=''),
+                38:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=38, name='kp_38', swap='', type=''),
+                39:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=39, name='kp_39', swap='', type=''),
+                4:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=4, name='kp_4', swap='', type=''),
+                40:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=40, name='kp_40', swap='', type=''),
+                41:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=41, name='kp_41', swap='', type=''),
+                42:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=42, name='kp_42', swap='', type=''),
+                43:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=43, name='kp_43', swap='', type=''),
+                44:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=44, name='kp_44', swap='', type=''),
+                45:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=45, name='kp_45', swap='', type=''),
+                5:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=5, name='kp_5', swap='', type=''),
+                6:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=6, name='kp_6', swap='', type=''),
+                7:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=7, name='kp_7', swap='', type=''),
+                8:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=8, name='kp_8', swap='', type=''),
+                9:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=9, name='kp_9', swap='', type='')
+            }),
+            num_keypoints=46,
+            sigmas=[
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+            ],
+            skeleton_info=dict()),
+        pipeline=[
+            dict(backend_args=None, type='LoadImage'),
+            dict(padding=1.0, type='GetBBoxCenterScale'),
+            dict(
+                rotate_factor=30,
+                scale_factor=[
+                    0.75,
+                    1.25,
+                ],
+                shift_factor=0.0,
+                type='RandomBBoxTransform'),
+            dict(input_size=(
+                256,
+                256,
+            ), type='TopdownAffine'),
+            dict(direction='horizontal', prob=0.0, type='RandomFlip'),
+            dict(
+                encoder=dict(
+                    heatmap_size=(
+                        64,
+                        64,
+                    ),
+                    input_size=(
+                        256,
+                        256,
+                    ),
+                    sigma=2,
+                    type='UDPHeatmap'),
+                type='GenerateTarget'),
+            dict(type='PackPoseInputs'),
+        ],
+        type='CocoDataset'),
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline = [
+    dict(backend_args=None, type='LoadImage'),
+    dict(padding=1.0, type='GetBBoxCenterScale'),
+    dict(
+        rotate_factor=30,
+        scale_factor=[
+            0.75,
+            1.25,
+        ],
+        shift_factor=0.0,
+        type='RandomBBoxTransform'),
+    dict(input_size=(
+        256,
+        256,
+    ), type='TopdownAffine'),
+    dict(direction='horizontal', prob=0.0, type='RandomFlip'),
+    dict(
+        encoder=dict(
+            heatmap_size=(
+                64,
+                64,
+            ),
+            input_size=(
+                256,
+                256,
+            ),
+            sigma=2,
+            type='UDPHeatmap'),
+        type='GenerateTarget'),
+    dict(type='PackPoseInputs'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=16,
+    dataset=dict(
+        ann_file=
+        '/home/sagemaker-user/LostPet/dogface_landmark_estimation_hrcnn/data/dogflw/annotations/val.json',
+        data_mode='topdown',
+        data_prefix=dict(img='images/'),
+        data_root=
+        '/home/sagemaker-user/.cache/kagglehub/datasets/georgemartvel/dogflw/versions/1/DogFLW/test',
+        metainfo=dict(
+            dataset_name='dogflw',
+            joint_weights=[
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+            ],
+            keypoint_info=dict({
+                0:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=0, name='kp_0', swap='', type=''),
+                1:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=1, name='kp_1', swap='', type=''),
+                10:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=10, name='kp_10', swap='', type=''),
+                11:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=11, name='kp_11', swap='', type=''),
+                12:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=12, name='kp_12', swap='', type=''),
+                13:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=13, name='kp_13', swap='', type=''),
+                14:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=14, name='kp_14', swap='', type=''),
+                15:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=15, name='kp_15', swap='', type=''),
+                16:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=16, name='kp_16', swap='', type=''),
+                17:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=17, name='kp_17', swap='', type=''),
+                18:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=18, name='kp_18', swap='', type=''),
+                19:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=19, name='kp_19', swap='', type=''),
+                2:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=2, name='kp_2', swap='', type=''),
+                20:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=20, name='kp_20', swap='', type=''),
+                21:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=21, name='kp_21', swap='', type=''),
+                22:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=22, name='kp_22', swap='', type=''),
+                23:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=23, name='kp_23', swap='', type=''),
+                24:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=24, name='kp_24', swap='', type=''),
+                25:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=25, name='kp_25', swap='', type=''),
+                26:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=26, name='kp_26', swap='', type=''),
+                27:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=27, name='kp_27', swap='', type=''),
+                28:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=28, name='kp_28', swap='', type=''),
+                29:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=29, name='kp_29', swap='', type=''),
+                3:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=3, name='kp_3', swap='', type=''),
+                30:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=30, name='kp_30', swap='', type=''),
+                31:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=31, name='kp_31', swap='', type=''),
+                32:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=32, name='kp_32', swap='', type=''),
+                33:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=33, name='kp_33', swap='', type=''),
+                34:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=34, name='kp_34', swap='', type=''),
+                35:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=35, name='kp_35', swap='', type=''),
+                36:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=36, name='kp_36', swap='', type=''),
+                37:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=37, name='kp_37', swap='', type=''),
+                38:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=38, name='kp_38', swap='', type=''),
+                39:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=39, name='kp_39', swap='', type=''),
+                4:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=4, name='kp_4', swap='', type=''),
+                40:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=40, name='kp_40', swap='', type=''),
+                41:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=41, name='kp_41', swap='', type=''),
+                42:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=42, name='kp_42', swap='', type=''),
+                43:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=43, name='kp_43', swap='', type=''),
+                44:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=44, name='kp_44', swap='', type=''),
+                45:
+                dict(
+                    color=[
+                        255,
+                        0,
+                        0,
+                    ], id=45, name='kp_45', swap='', type=''),
+                5:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=5, name='kp_5', swap='', type=''),
+                6:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=6, name='kp_6', swap='', type=''),
+                7:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=7, name='kp_7', swap='', type=''),
+                8:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=8, name='kp_8', swap='', type=''),
+                9:
+                dict(color=[
+                    255,
+                    0,
+                    0,
+                ], id=9, name='kp_9', swap='', type='')
+            }),
+            num_keypoints=46,
+            sigmas=[
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+                0.025,
+            ],
+            skeleton_info=dict()),
+        pipeline=[
+            dict(backend_args=None, type='LoadImage'),
+            dict(padding=1.0, type='GetBBoxCenterScale'),
+            dict(input_size=(
+                256,
+                256,
+            ), type='TopdownAffine'),
+            dict(type='PackPoseInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    num_workers=4,
+    persistent_workers=False,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    keypoint_indices=[
+        0,
+        1,
+    ], norm_mode='keypoint_distance', type='NME')
+val_pipeline = [
+    dict(backend_args=None, type='LoadImage'),
+    dict(padding=1.0, type='GetBBoxCenterScale'),
+    dict(input_size=(
+        256,
+        256,
+    ), type='TopdownAffine'),
+    dict(type='PackPoseInputs'),
+]
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    save_dir='work_dirs/mmpose_dogflw/visualizations',
+    type='PoseLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = './work_dirs/td-hm_hrnet-w32_udp_dogflw-256x256'
+
+2025/10/03 13:42:43 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2025/10/03 13:42:43 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) PoseVisualizationHook              
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) PoseVisualizationHook              
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
